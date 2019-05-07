@@ -1,6 +1,8 @@
 import React from "react";
 import MeetingsContainer from "../containers/MeetingsContainer";
 
-export default function MeetingsPage() {
+const MeetingsPage: React.FC<{}> = () => {
   return <MeetingsContainer />;
-}
+};
+
+export default MeetingsPage;
