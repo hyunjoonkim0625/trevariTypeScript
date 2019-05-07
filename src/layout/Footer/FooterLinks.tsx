@@ -2,7 +2,7 @@ import React from "react";
 import "./FooterLinks.scss";
 import { Link } from "react-router-dom";
 
-export default function FooterLinks() {
+const FooterLinks: React.FC = () => {
   return (
     <div className="FooterLinks">
       {/* 사용하지 않기 때문에 disabled 처리 */}
@@ -20,4 +20,6 @@ export default function FooterLinks() {
       </Link>
     </div>
   );
-}
+};
+
+export default FooterLinks;
