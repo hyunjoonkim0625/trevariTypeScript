@@ -160,8 +160,10 @@ const faqContentData = [
   }
 ];
 
-export default function FaqContainer() {
+const FaqContainer: React.FC = () => {
   return (
     <FaqView faqCategories={faqCategoriesData} faqContent={faqContentData} />
   );
-}
+};
+
+export default FaqContainer;

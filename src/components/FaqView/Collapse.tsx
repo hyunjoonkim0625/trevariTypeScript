@@ -1,19 +1,26 @@
-import React, { Component } from "react";
+import React from "react";
 import "./Collapse.scss";
 
-export default class Collapse extends Component {
-  constructor(props) {
-    super(props);
+interface CollapseProps {
+  category: string;
+  title: string;
+  initialShow: boolean;
+  key: number;
+}
 
-    this.state = {
-      show: props.initialShow
-    };
+interface CollapseState {
+  show: boolean;
+}
 
-    this.myRef = React.createRef();
-  }
+class Collapse extends React.Component<CollapseProps, CollapseState> {
+  state: CollapseState = {
+    show: this.props.initialShow
+  };
 
+  private myRef = React.createRef<HTMLDivElement>();
   // 카테고리간 이동 시에는 이전 카테고리에서 열려있던 탭들이 닫히게 하기 위해 작성
-  componentDidUpdate(prevState) {
+
+  public componentDidUpdate(prevState: any) {
     if (this.props.category !== prevState.category) {
       this.setState({
         show: false
@@ -21,18 +28,24 @@ export default class Collapse extends Component {
     }
   }
 
-  handleCollapseShow = () => {
+  handleCollapseShow = (): void => {
     this.setState(prevState => ({
       show: !prevState.show
     }));
   };
 
   // 탭 선택 시, 탭이 화면 상단으로 이동
-  scrollToMyRef = () =>
-    window.scrollTo({
-      top: this.myRef.current.offsetTop - 10,
-      behavior: "smooth"
-    });
+
+  scrollToMyRef = (): void => {
+    const node = this.myRef.current;
+
+    if (node) {
+      window.scrollTo({
+        top: node.offsetTop - 10,
+        behavior: "smooth"
+      });
+    }
+  };
 
   render() {
     const { category, title, children } = this.props;
@@ -67,3 +80,5 @@ export default class Collapse extends Component {
     );
   }
 }
+
+export default Collapse;

@@ -1,30 +1,40 @@
-import React, { Component } from "react";
+import React from "react";
 import "./FaqView.scss";
 import Collapse from "./Collapse";
 
-export default class FaqView extends Component {
-  constructor(props) {
-    super(props);
+interface FaqViewProps {
+  faqContent: {
+    title: string;
+    text: string;
+    category: string;
+  }[];
+  faqCategories: any;
+}
 
-    this.state = {
-      currentTab: "faq",
-      displayCategory: "북클럽"
-    };
-  }
+interface FaqViewState {
+  currentTab: "faq" | "notice";
+  displayCategory: string;
+}
 
-  handleChangeCategory = category => {
+class FaqView extends React.Component<FaqViewProps, FaqViewState> {
+  state: FaqViewState = {
+    currentTab: "faq",
+    displayCategory: "북클럽"
+  };
+
+  handleChangeCategory = (category: string): void => {
     this.setState({
       displayCategory: category
     });
   };
 
-  handleFaqClick = () => {
+  handleFaqClick = (): void => {
     this.setState({
       currentTab: "faq"
     });
   };
 
-  handleNoticeClick = () => {
+  handleNoticeClick = (): void => {
     this.setState({
       currentTab: "notice"
     });
@@ -68,7 +78,7 @@ export default class FaqView extends Component {
 
           {/* 카테고리 메뉴  */}
           <div className="FaqView__container__categoryMenu">
-            {faqCategories.map(category => (
+            {faqCategories.map((category: string) => (
               <button
                 className={displayCategory === category ? "selected" : ""}
                 key={category}
@@ -102,3 +112,5 @@ export default class FaqView extends Component {
     );
   }
 }
+
+export default FaqView;
