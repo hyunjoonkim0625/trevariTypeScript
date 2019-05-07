@@ -9,7 +9,7 @@ import instagramLogo from "../../images/instagram-logo.png";
 import naverBlogLogo from "../../images/naver-blog-logo.png";
 import Button from "./Button";
 
-export default function Footer() {
+const Footer: React.FC = () => {
   return (
     <div className="Footer">
       <div className="Footer__vision">
@@ -64,4 +64,6 @@ export default function Footer() {
       </div>
     </div>
   );
-}
+};
+
+export default Footer;
