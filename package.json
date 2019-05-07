@@ -1,0 +1,46 @@
+{
+  "name": "trevari-project",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.17",
+    "@fortawesome/free-solid-svg-icons": "^5.8.1",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@types/node-sass": "^4.11.0",
+    "@types/react": "^16.8.16",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-router-dom": "^4.3.3",
+    "eslint-plugin-prettier": "^3.0.1",
+    "i": "^0.3.6",
+    "node-sass": "^4.11.0",
+    "npm": "^6.9.0",
+    "prettier": "^1.16.4",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "2.1.8",
+    "tslint": "^5.16.0",
+    "tslint-react": "^4.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
+    "source-map-loader": "^0.2.4",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.4.5"
+  }
+}
