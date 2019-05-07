@@ -51,34 +51,6 @@ class MeetingsView extends React.Component<
     }
   };
 
-  // 검색 필터링을 위한 핸들러
-  handleSearch = (value: string) => {
-    return (event: any) => {
-      event.preventDefault();
-
-      const defaultClubList = this.props.clubList;
-
-      const lowerCasedValue = value.toLowerCase();
-
-      const searchedList = defaultClubList.filter((item: any) =>
-        item.clubName.toLowerCase().includes(lowerCasedValue)
-      );
-
-      const trimmedValue = value.trim();
-
-      // 검색창에 아무것도 입력이 안되었을 시에는 초기 목록을 불러온다
-      if (trimmedValue === "") {
-        this.setState({
-          currentlyShownList: defaultClubList
-        });
-      } else {
-        this.setState({
-          currentlyShownList: searchedList
-        });
-      }
-    };
-  };
-
   render() {
     const { currentlyShownList, loading, items } = this.state;
     return (
@@ -92,7 +64,7 @@ class MeetingsView extends React.Component<
             type="button"
             value="독서모임 캘린더 바로가기"
           />
-          <Search handleSearch={this.handleSearch} />
+          <Search clubList={currentlyShownList} />
         </div>
 
         {/* 검색 결과 유무에 따른 조건부 렌더링 */}
