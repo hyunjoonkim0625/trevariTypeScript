@@ -2,49 +2,21 @@ import React from "react";
 import "./Search.scss";
 
 interface SearchProps {
-  clubList: any;
+  handleSearch: (
+    value: string
+  ) => (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 interface SearchState {
   value: string;
-  currentlyShownList: any;
 }
 
 class Search extends React.Component<SearchProps, SearchState> {
   state: SearchState = {
-    value: "",
-    currentlyShownList: this.props.clubList
+    value: ""
   };
 
-  // 검색 필터링을 위한 핸들러
-  handleSearch = (value: string) => {
-    return (event: any) => {
-      event.preventDefault();
-
-      const defaultClubList = this.props.clubList;
-
-      const lowerCasedValue = value.toLowerCase();
-
-      const searchedList = defaultClubList.filter((item: any) =>
-        item.clubName.toLowerCase().includes(lowerCasedValue)
-      );
-
-      const trimmedValue = value.trim();
-
-      // 검색창에 아무것도 입력이 안되었을 시에는 초기 목록을 불러온다
-      if (trimmedValue === "") {
-        this.setState({
-          currentlyShownList: defaultClubList
-        });
-      } else {
-        this.setState({
-          currentlyShownList: searchedList
-        });
-      }
-    };
-  };
-
-  handleChange = (event: any) => {
+  handleChange = (event: any): void => {
     this.setState({
       value: event.target.value
     });
@@ -52,7 +24,10 @@ class Search extends React.Component<SearchProps, SearchState> {
 
   render() {
     return (
-      <form className="Search" onSubmit={this.handleSearch(this.state.value)}>
+      <form
+        className="Search"
+        onSubmit={this.props.handleSearch(this.state.value)}
+      >
         <input
           className="Search__input"
           value={this.state.value}

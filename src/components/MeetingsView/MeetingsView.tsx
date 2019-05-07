@@ -39,8 +39,36 @@ class MeetingsView extends React.Component<
     window.removeEventListener("scroll", this.onScroll, false);
   }
 
+  // 검색 필터링을 위한 핸들러
+  handleSearch = (value: string) => {
+    return (event: any): void => {
+      event.preventDefault();
+
+      const defaultClubList = this.props.clubList;
+
+      const lowerCasedValue = value.toLowerCase();
+
+      const searchedList = defaultClubList.filter((item: any) =>
+        item.clubName.toLowerCase().includes(lowerCasedValue)
+      );
+
+      const trimmedValue = value.trim();
+
+      // 검색창에 아무것도 입력이 안되었을 시에는 초기 목록을 불러온다
+      if (trimmedValue === "") {
+        this.setState({
+          currentlyShownList: defaultClubList
+        });
+      } else {
+        this.setState({
+          currentlyShownList: searchedList
+        });
+      }
+    };
+  };
+
   // 스크롤이 화면 맨 아래에 도착했는지 확인하는 핸들러
-  onScroll = () => {
+  onScroll = (): void => {
     if (
       window.innerHeight + window.scrollY >=
       document.body.offsetHeight - 250
@@ -53,6 +81,7 @@ class MeetingsView extends React.Component<
 
   render() {
     const { currentlyShownList, loading, items } = this.state;
+
     return (
       <div className="MeetingsView">
         <div className="MeetingsView__header">
@@ -64,7 +93,7 @@ class MeetingsView extends React.Component<
             type="button"
             value="독서모임 캘린더 바로가기"
           />
-          <Search clubList={currentlyShownList} />
+          <Search handleSearch={this.handleSearch} />
         </div>
 
         {/* 검색 결과 유무에 따른 조건부 렌더링 */}
@@ -86,7 +115,7 @@ class MeetingsView extends React.Component<
                       <div className="MeetingsView__clubList__content__image">
                         <img
                           src={item.imgSrc}
-                          alt="yoda"
+                          alt={item.bookTitle}
                           onLoad={() =>
                             this.setState({
                               loading: false
