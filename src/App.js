@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Header from "./layout/Header/Header";
 import MeetingsPage from "./pages/MeetingsPage";
 import FaqPage from "./pages/FaqPage";
+// import Footer from "./layout/Footer/Footer";
 import Footer from "./layout/Footer/Footer";
 
 // fontAwesomeIcons
