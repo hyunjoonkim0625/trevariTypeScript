@@ -1,23 +1,29 @@
-import React, { Component } from "react";
+import React from "react";
 import "./Button.scss";
 
-export default class Button extends Component {
-  constructor(props) {
-    super(props);
+interface ButtonProps {
+  scrollStepInPx: number;
+  delayInMs: number;
+}
 
-    this.state = {
-      intervalId: 0
-    };
-  }
+interface ButtonState {
+  // TODO: number 혹은 Timeout이 들어오는데, 어떤 타입으로 설정하는 것이 좋을까?
+  intervalId: any;
+}
 
-  scrollStep() {
+class Button extends React.Component<ButtonProps, ButtonState> {
+  state: ButtonState = {
+    intervalId: 0
+  };
+
+  scrollStep(): void {
     if (window.pageYOffset === 0) {
       clearInterval(this.state.intervalId);
     }
     window.scroll(0, window.pageYOffset - this.props.scrollStepInPx);
   }
 
-  scrollToTop() {
+  scrollToTop(): void {
     let intervalId = setInterval(
       this.scrollStep.bind(this),
       this.props.delayInMs
@@ -38,3 +44,5 @@ export default class Button extends Component {
     );
   }
 }
+
+export default Button;
