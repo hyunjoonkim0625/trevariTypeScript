@@ -12,13 +12,13 @@ interface SearchState {
 }
 
 class Search extends React.Component<SearchProps, SearchState> {
-  state: SearchState = {
+  state = {
     value: ""
   };
 
-  handleChange = (event: any): void => {
+  handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
     this.setState({
-      value: event.target.value
+      value: event.currentTarget.value
     });
   };
 

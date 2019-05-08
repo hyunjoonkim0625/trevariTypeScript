@@ -1,15 +1,18 @@
 import React from "react";
 import "./MeetingsView.scss";
 import Search from "./Search";
+import { IClub } from "../../common/types";
 
 interface MeetingsViewProps {
-  // FIXME: 데이터 타입 정의할 때는 가능한 any을 피하는 게 좋아요! ㅋㅋㅋㅋ MeetingContainers 컴포넌트에 정의하셨던 IClub 인터페이스도 전역으로 별도의 파일을 빼서 재사용하시면 좋아요
-  clubList: any;
+  // FIXED: 데이터 타입 정의할 때는 가능한 any을 피하는 게 좋아요! ㅋㅋㅋㅋ MeetingContainers 컴포넌트에 정의하셨던 IClub 인터페이스도 전역으로 별도의 파일을 빼서 재사용하시면 좋아요
+  clubList: IClub[];
 }
 
 interface MeetingsViewState {
-  // FIXME: 어떤 타입의 리스트인지도 명시해주면 좋습니다.
-  currentlyShownList: [];
+  // FIXED: 어떤 타입의 리스트인지도 명시해주면 좋습니다.
+  // 인터페이스의 상태는 당연히... type에서 가져와서 설정을 해야하지!
+  // currentlyShownList: IClub[];
+  currentlyShownList: IClub[];
   value: string;
   loading: boolean;
   items: number;
@@ -19,8 +22,8 @@ class MeetingsView extends React.Component<
   MeetingsViewProps,
   MeetingsViewState
 > {
-  state: MeetingsViewState = {
-    currentlyShownList: [],
+  state = {
+    currentlyShownList: [] as IClub[],
     value: "",
     loading: true,
     items: 5
@@ -43,15 +46,15 @@ class MeetingsView extends React.Component<
 
   // 검색 필터링을 위한 핸들러
   handleSearch = (value: string) => {
-    // FIXME: 이런 콜백 함수의 경우 react에 타입이 이미 정의된 경우가 많아요. ex) React.FormEvent<HTMLInputElement>
-    return (event: any): void => {
+    // FIXED: 이런 콜백 함수의 경우 react에 타입이 이미 정의된 경우가 많아요. ex) React.FormEvent<HTMLInputElement>
+    return (event: React.FormEvent<HTMLFormElement>): void => {
       event.preventDefault();
 
       const defaultClubList = this.props.clubList;
 
       const lowerCasedValue = value.toLowerCase();
 
-      const searchedList = defaultClubList.filter((item: any) =>
+      const searchedList = defaultClubList.filter(item =>
         item.clubName.toLowerCase().includes(lowerCasedValue)
       );
 
@@ -85,6 +88,8 @@ class MeetingsView extends React.Component<
   render() {
     const { currentlyShownList, loading, items } = this.state;
 
+    const hasData: boolean = currentlyShownList.length > 0 ? true : false;
+
     return (
       <div className="MeetingsView">
         <div className="MeetingsView__header">
@@ -100,62 +105,60 @@ class MeetingsView extends React.Component<
         </div>
 
         {/* 검색 결과 유무에 따른 조건부 렌더링 */}
-        {currentlyShownList.length > 0 ? (
+        {hasData ? (
           // 이미지가 로드가 된 후에 콘텐츠를 화면에 렌더하기 위핸 클래스 추가
           <div
             className={`MeetingsView__clubList${loading ? "--loading" : ""}`}
           >
-            {/* FIXME: currentlyShownList가 없는 경우가 없을 것 같아 해당 체킹은 생략해도 괜찮을 것 같아요. */}
-            {currentlyShownList &&
-              currentlyShownList
-                .slice(0, items)
-                // FIXME: 여기도 any 자제!
-                .map((item: any, index: number) => {
-                  return (
-                    // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                    <div
-                      className="MeetingsView__clubList__content"
-                      key={index}
-                    >
-                      <div className="MeetingsView__clubList__content__image">
-                        <img
-                          src={item.imgSrc}
-                          alt={item.bookTitle}
-                          onLoad={() =>
-                            this.setState({
-                              loading: false
-                            })
-                          }
-                        />
-                        {item.clubRep ? (
-                          <p className="MeetingsView__clubList__content__image__clubRep">
-                            클럽장 {item.clubRep}님
-                          </p>
-                        ) : null}
-                        {item.trevariDesigned ? (
-                          <p className="MeetingsView__clubList__content__image__trevari">
-                            트레바리가 디자인한 클럽
-                          </p>
-                        ) : null}
+            {/* FIXED: currentlyShownList가 없는 경우가 없을 것 같아 해당 체킹은 생략해도 괜찮을 것 같아요. */}
+            {/* 초기 상태값에 []를 할당하기 때문에 */}
+            {currentlyShownList
+              .slice(0, items)
+              // FIXED: 여기도 any 자제! -> 맞는 방법일까?
 
-                        <div className="MeetingsView__clubList__content__image__clubInfo">
-                          <p>{item.clubName}</p>
-                          <p>{item.clubDescription}</p>
-                        </div>
+              .map((item, index: number) => {
+                return (
+                  // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                  <div className="MeetingsView__clubList__content" key={index}>
+                    <div className="MeetingsView__clubList__content__image">
+                      <img
+                        src={item.imgSrc}
+                        alt={item.bookTitle}
+                        onLoad={() =>
+                          this.setState({
+                            loading: false
+                          })
+                        }
+                      />
+                      {item.clubRep ? (
+                        <p className="MeetingsView__clubList__content__image__clubRep">
+                          클럽장 {item.clubRep}님
+                        </p>
+                      ) : null}
+                      {item.trevariDesigned ? (
+                        <p className="MeetingsView__clubList__content__image__trevari">
+                          트레바리가 디자인한 클럽
+                        </p>
+                      ) : null}
+
+                      <div className="MeetingsView__clubList__content__image__clubInfo">
+                        <p>{item.clubName}</p>
+                        <p>{item.clubDescription}</p>
                       </div>
-
-                      <p className="MeetingsView__clubList__content__bookTitle">
-                        {item.bookTitle}
-                      </p>
-                      <p className="MeetingsView__clubList__content__location">
-                        {item.location}
-                      </p>
-                      <p className="MeetingsView__clubList__content__time">
-                        {item.time}
-                      </p>
                     </div>
-                  );
-                })}
+
+                    <p className="MeetingsView__clubList__content__bookTitle">
+                      {item.bookTitle}
+                    </p>
+                    <p className="MeetingsView__clubList__content__location">
+                      {item.location}
+                    </p>
+                    <p className="MeetingsView__clubList__content__time">
+                      {item.time}
+                    </p>
+                  </div>
+                );
+              })}
           </div>
         ) : (
           <div className="MeetingsView__notFound">
