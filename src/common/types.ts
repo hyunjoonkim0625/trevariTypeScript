@@ -1,3 +1,4 @@
+// clubListData 관련 타입
 export interface IClub {
   imgSrc: string;
   clubName: string;
@@ -7,4 +8,11 @@ export interface IClub {
   time: string;
   clubRep: string;
   trevariDesigned: boolean;
+}
+
+// faq 관련 데이터의 타입
+export interface IFaq {
+  title: string;
+  text: string;
+  category: string;
 }

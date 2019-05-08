@@ -1,14 +1,11 @@
 import React from "react";
 import "./FaqView.scss";
 import Collapse from "./Collapse";
+import { IFaq } from "../../common/types";
 
 interface FaqViewProps {
-  faqContent: {
-    title: string;
-    text: string;
-    category: string;
-  }[];
-  faqCategories: any;
+  faqContent: IFaq[];
+  faqCategories: string[];
 }
 
 interface FaqViewState {
@@ -78,7 +75,7 @@ class FaqView extends React.Component<FaqViewProps, FaqViewState> {
 
           {/* 카테고리 메뉴  */}
           <div className="FaqView__container__categoryMenu">
-            {faqCategories.map((category: string) => (
+            {faqCategories.map(category => (
               <button
                 className={displayCategory === category ? "selected" : ""}
                 key={category}
