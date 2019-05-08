@@ -3,10 +3,12 @@ import "./MeetingsView.scss";
 import Search from "./Search";
 
 interface MeetingsViewProps {
+  // FIXME: 데이터 타입 정의할 때는 가능한 any을 피하는 게 좋아요! ㅋㅋㅋㅋ MeetingContainers 컴포넌트에 정의하셨던 IClub 인터페이스도 전역으로 별도의 파일을 빼서 재사용하시면 좋아요
   clubList: any;
 }
 
 interface MeetingsViewState {
+  // FIXME: 어떤 타입의 리스트인지도 명시해주면 좋습니다.
   currentlyShownList: [];
   value: string;
   loading: boolean;
@@ -41,6 +43,7 @@ class MeetingsView extends React.Component<
 
   // 검색 필터링을 위한 핸들러
   handleSearch = (value: string) => {
+    // FIXME: 이런 콜백 함수의 경우 react에 타입이 이미 정의된 경우가 많아요. ex) React.FormEvent<HTMLInputElement>
     return (event: any): void => {
       event.preventDefault();
 
@@ -102,9 +105,11 @@ class MeetingsView extends React.Component<
           <div
             className={`MeetingsView__clubList${loading ? "--loading" : ""}`}
           >
+            {/* FIXME: currentlyShownList가 없는 경우가 없을 것 같아 해당 체킹은 생략해도 괜찮을 것 같아요. */}
             {currentlyShownList &&
               currentlyShownList
                 .slice(0, items)
+                // FIXME: 여기도 any 자제!
                 .map((item: any, index: number) => {
                   return (
                     // eslint-disable-next-line jsx-a11y/anchor-is-valid
