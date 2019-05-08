@@ -1,17 +1,9 @@
 import React from "react";
 import MeetingsView from "../components/MeetingsView/MeetingsView";
+import { IClub } from "../common/types";
 
 interface MeetingsContainerState {
-  clubListData: {
-    imgSrc: string;
-    clubName: string;
-    clubDescription: string;
-    bookTitle: string;
-    location: string;
-    time: string;
-    clubRep: string;
-    trevariDesigned: boolean;
-  }[];
+  clubListData: IClub[];
 }
 
 // FIXME: interface 분리를 하여 아래와 같은 방식으로 작성하면 더 직관적이다
@@ -25,6 +17,7 @@ interface MeetingsContainerState {
 //   clubRep: string;
 //   trevariDesigned: boolean;
 // }
+
 // interface IState {
 //   clubs: IClub[];
 // }
