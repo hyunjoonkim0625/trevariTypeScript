@@ -13,7 +13,7 @@ interface MeetingsViewState {
   // 인터페이스의 상태는 당연히... type에서 가져와서 설정을 해야하지!
   // currentlyShownList: IClub[];
   currentlyShownList: IClub[];
-  value: string;
+  value?: string;
   loading: boolean;
   items: number;
 }

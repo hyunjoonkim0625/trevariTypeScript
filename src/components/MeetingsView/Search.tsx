@@ -8,7 +8,7 @@ interface SearchProps {
 }
 
 interface SearchState {
-  value: string;
+  value?: string;
 }
 
 class Search extends React.Component<SearchProps, SearchState> {

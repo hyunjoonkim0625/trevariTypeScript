@@ -3,6 +3,10 @@ import React from "react";
 
 import FaqContainer from "../containers/FaqContainer";
 
-export default function FaqPage() {
-  return <FaqContainer />;
-}
+// export default function FaqPage() {
+//   return <FaqContainer />;
+// }
+
+const FaqPage: React.FC = () => <FaqContainer />;
+
+export default FaqPage;
